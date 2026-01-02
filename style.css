@@ -1,0 +1,212 @@
+/* =====================================================
+   Design Tokens
+===================================================== */
+
+:root {
+  /* sizes */
+  --day-width: 32px;
+  --day-height: 54px;
+  --month-width: 70px;
+
+  --line: 1px;
+  --line-offset: -1px;
+
+  --pad-xs: 1px;
+  --pad-s: 2px;
+  --pad-m: 4px;
+
+  /* colors */
+  --c-text-main: #000;
+  --c-text-muted: #777;
+  --c-text-light: #999;
+
+  --c-grid: #cfcfcf;
+  --c-grid-light: #dcdcdc;
+
+  --c-accent: #000;
+}
+
+/* =====================================================
+   Base
+===================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 40px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--c-text-main);
+}
+
+/* =====================================================
+   Title
+===================================================== */
+
+.title {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.title .light {
+  font-weight: 300;
+  color: #bdbdbd;
+  margin-right: 20px;
+}
+
+.title .bold {
+  font-weight: 900;
+}
+
+/* =====================================================
+   Calendar Layout
+===================================================== */
+
+.calendar {
+  display: inline-flex;
+  flex-direction: column;
+  border-left: var(--line) solid var(--c-grid);
+}
+
+.month-row {
+  display: flex;
+  align-items: stretch;
+  width: fit-content;
+}
+
+.month-row:first-child {
+  border-top: var(--line) solid var(--c-grid-light);
+}
+
+/* =====================================================
+   Month Cell
+===================================================== */
+
+.month-cell {
+  width: var(--month-width);
+  height: var(--day-height);
+  padding: var(--pad-m) 0 0 var(--pad-m);
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* =====================================================
+   Day Cell
+===================================================== */
+
+.day {
+  width: var(--day-width);
+  height: var(--day-height);
+
+  border-left: var(--line) solid var(--c-grid);
+  font-size: 0;
+}
+
+/* =====================================================
+   Day Content
+===================================================== */
+
+.day-content {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+
+  padding: var(--pad-xs) var(--pad-s) 0;
+  line-height: 1;
+}
+
+.day-content .date {
+  grid-column: 2;
+  text-align: center;
+  font-size: 5px;
+  font-weight: 400;
+  color: var(--c-text-main);
+}
+
+.day-content .dow {
+  grid-column: 3;
+  justify-self: end;
+  font-size: 5px;
+  color: var(--c-text-muted);
+}
+
+/* =====================================================
+   Weekend / Accent
+===================================================== */
+
+.day.weekend {
+  position: relative;
+}
+
+/* top */
+.day.weekend::before,
+.day.weekend::after {
+  content: '';
+  position: absolute;
+  left: var(--line-offset);
+  right: var(--line-offset);
+  height: var(--line);
+  background: var(--c-accent);
+  pointer-events: none;
+}
+
+.day.weekend::before {
+  top: var(--line-offset);
+}
+
+.day.weekend::after {
+  bottom: var(--line-offset);
+}
+
+.day.saturday {
+  border-left-color: var(--c-accent);
+}
+
+.day.sunday {
+  border-left-color: var(--c-accent);
+  box-shadow: var(--line) 0 0 var(--c-accent);
+}
+
+/* =====================================================
+   Month End
+===================================================== */
+
+.day.month-end {
+  box-shadow: var(--line) 0 0 var(--c-grid);
+}
+
+.day.month-end.weekend {
+  box-shadow: var(--line) 0 0 var(--c-accent);
+}
+
+/* =====================================================
+   Month Divider
+===================================================== */
+
+.month-divider {
+  height: 0;
+  border-top: var(--line) solid var(--c-grid);
+}
+
+/* =====================================================
+   Print
+===================================================== */
+
+@media print {
+  body {
+    margin: 0;
+  }
+
+  .title {
+    page-break-after: avoid;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
